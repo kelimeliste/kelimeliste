@@ -548,56 +548,6 @@ let words = [];
 let editingId = null;
 let lastAddedId = null;
 
-const SEED_WORDS = [
-  ["Formal","Resmi",""],
-  ["Convenient","Uygun",""],
-  ["Attendees","Katılımcılar",""],
-  ["Referring","Atıfta bulunmak",""],
-  ["Appointment","Randevu",""],
-  ["Climate","İklim",""],
-  ["Constantly","Sürekli, Devamlı",""],
-  ["Complain","Şikayet etmek",""],
-  ["Looking Forward","Dört gözle beklemek",""],
-  ["Venture","Girişim",""],
-  ["Regret","Pişmanlık",""],
-  ["Delighted","Memnuniyet",""],
-  ["Stunned","Sersemlemek",""],
-  ["Content","Tatmin olmak",""],
-  ["Unphased","Etkilenmemiş","Bir olaydan etkilenmemek"],
-  ["Spirit Broken","Cesaretini kaybetmek",""],
-  ["Thrilled","Heyecanlı, Coşkulu","Exited gibi ama daha da heyecanlı, çok coşkulu anlamında"],
-  ["Hesitate","Tereddüt etmek",""],
-  ["In the meantime","Bu sırada","Bir şey olurken o sırada... gibi"],
-  ["Permanent","Kalıcı",""],
-  ["Treatment","Tedavi",""],
-  ["Quite","Oldukça",""],
-  ["Annually","Yıllık",""],
-  ["Occasionally","Ara sıra",""],
-  ["Consistent","Tutarlı",""],
-  ["Attend","Katılmak",""],
-  ["Approximately","Yaklaşık olarak",""],
-  ["Sidetracked","Yoldan çıkmak",""],
-  ["Wraps Up","Tamamlandı",""],
-  ["Agenda","Gündem",""],
-  ["It is high time","Şu anda tam zamanı",""],
-  ["Prophosal","Teklif",""],
-  ["Cottage","Kır evi",""],
-  ["Raise Salary","Maaşını arttırmak",""],
-  ["Inspire","İlham vermek",""],
-  ["Humble","Mütevazi",""],
-  ["Competence","Yetkinlik",""],
-  ["Commitment","Bağlılık",""],
-  ["Compatibility","Uyumluluk",""],
-  ["Demonstrate","Göstermek",""],
-  ["Utter","Tamamen",""],
-  ["Accomplish","Sonuçlandırmak",""],
-  ["Overstep","Sınırı aşmak",""],
-  ["Colleague","İş arkadaşı",""],
-  ["Arrogant","Kibirli",""],
-  ["Boundary","Limit",""],
-  ["Brokering","Aracılık",""]
-];
-
 const authScreen = document.getElementById('authScreen');
 const appScreen = document.getElementById('appScreen');
 const googleLoginBtn = document.getElementById('googleLoginBtn');
@@ -680,22 +630,6 @@ async function loadWords(){
   }
 
   words = (data || []).map(w => ({ id: w.id, en: w.en, tr: w.tr, note: w.note || '', createdAt: w.created_at }));
-
-  // İlk girişte, hiç kelimesi yoksa örnek kelimeleri ekle
-  if(words.length === 0){
-    const seedRows = SEED_WORDS.map(([en, tr, note], idx) => ({
-      user_id: currentUser.id,
-      en, tr, note: note || '',
-      created_at: Date.now() + idx
-    }));
-    const { data: inserted, error: seedError } = await supabaseClient
-      .from('words')
-      .insert(seedRows)
-      .select();
-    if(!seedError && inserted){
-      words = inserted.map(w => ({ id: w.id, en: w.en, tr: w.tr, note: w.note || '', createdAt: w.created_at }));
-    }
-  }
 
   render();
 }
