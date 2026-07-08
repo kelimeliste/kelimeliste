@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kelimeliste</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpath%20d%3D%22M20%2034%20L29%208%20L41%2031%20Z%22%20fill%3D%22%23F4A64A%22/%3E%3Cpath%20d%3D%22M80%2034%20L71%208%20L59%2031%20Z%22%20fill%3D%22%23F4A64A%22/%3E%3Cpath%20d%3D%22M25%2031%20L30%2016%20L37%2030%20Z%22%20fill%3D%22%23FFD9AA%22/%3E%3Cpath%20d%3D%22M75%2031%20L70%2016%20L63%2030%20Z%22%20fill%3D%22%23FFD9AA%22/%3E%3Cellipse%20cx%3D%2250%22%20cy%3D%2256%22%20rx%3D%2235%22%20ry%3D%2231%22%20fill%3D%22%23F7B96B%22/%3E%3Cellipse%20cx%3D%2250%22%20cy%3D%2268%22%20rx%3D%2223%22%20ry%3D%2215%22%20fill%3D%22%23FFF6EA%22/%3E%3Cellipse%20cx%3D%2237%22%20cy%3D%2253%22%20rx%3D%224.5%22%20ry%3D%226.5%22%20fill%3D%22%233C3C3C%22/%3E%3Cellipse%20cx%3D%2263%22%20cy%3D%2253%22%20rx%3D%224.5%22%20ry%3D%226.5%22%20fill%3D%22%233C3C3C%22/%3E%3Cpath%20d%3D%22M45.5%2065%20L54.5%2065%20L50%2071%20Z%22%20fill%3D%22%23E8748A%22/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="kitty.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -57,20 +57,10 @@
     0%,100%{ transform:translateY(0) rotate(0deg); }
     50%{ transform:translateY(-3px) rotate(-3deg); }
   }
-  .owl svg, .mascot svg{
+  .owl img, .mascot img{
     width:1em;
     height:1em;
     display:block;
-  }
-  .cat-eye{
-    transform-origin:center;
-    transform-box:fill-box;
-    animation:cat-blink 4.5s ease-in-out infinite;
-  }
-  .cat-eye.right{ animation-delay:0.06s; }
-  @keyframes cat-blink{
-    0%, 92%, 100%{ transform:scaleY(1); }
-    95%{ transform:scaleY(0.12); }
   }
   .header-text h1{
     font-family:'Baloo 2', sans-serif;
@@ -480,21 +470,7 @@
   <div id="authScreen">
     <div class="auth-card">
       <div class="owl">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M20 34 L29 8 L41 31 Z" fill="#F4A64A"/>
-          <path d="M80 34 L71 8 L59 31 Z" fill="#F4A64A"/>
-          <path d="M25 31 L30 16 L37 30 Z" fill="#FFD9AA"/>
-          <path d="M75 31 L70 16 L63 30 Z" fill="#FFD9AA"/>
-          <ellipse cx="50" cy="56" rx="35" ry="31" fill="#F7B96B"/>
-          <ellipse cx="50" cy="68" rx="23" ry="15" fill="#FFF6EA"/>
-          <ellipse class="cat-eye left" cx="37" cy="53" rx="4.5" ry="6.5" fill="#3C3C3C"/>
-          <ellipse class="cat-eye right" cx="63" cy="53" rx="4.5" ry="6.5" fill="#3C3C3C"/>
-          <path d="M45.5 65 L54.5 65 L50 71 Z" fill="#E8748A"/>
-          <line x1="12" y1="61" x2="30" y2="59" stroke="#D9985A" stroke-width="2" stroke-linecap="round"/>
-          <line x1="12" y1="70" x2="30" y2="70" stroke="#D9985A" stroke-width="2" stroke-linecap="round"/>
-          <line x1="88" y1="61" x2="70" y2="59" stroke="#D9985A" stroke-width="2" stroke-linecap="round"/>
-          <line x1="88" y1="70" x2="70" y2="70" stroke="#D9985A" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+        <img src="kitty.svg" alt="Kelimeliste kedisi">
       </div>
       <h1>Kelimeliste'ye Hoşgeldin</h1>
       <p>Kelimelerini kaydetmek için Google ile giriş yap</p>
@@ -510,21 +486,7 @@
 
   <div class="header-card">
     <div class="owl">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M20 34 L29 8 L41 31 Z" fill="#F4A64A"/>
-        <path d="M80 34 L71 8 L59 31 Z" fill="#F4A64A"/>
-        <path d="M25 31 L30 16 L37 30 Z" fill="#FFD9AA"/>
-        <path d="M75 31 L70 16 L63 30 Z" fill="#FFD9AA"/>
-        <ellipse cx="50" cy="56" rx="35" ry="31" fill="#F7B96B"/>
-        <ellipse cx="50" cy="68" rx="23" ry="15" fill="#FFF6EA"/>
-        <ellipse class="cat-eye left" cx="37" cy="53" rx="4.5" ry="6.5" fill="#3C3C3C"/>
-        <ellipse class="cat-eye right" cx="63" cy="53" rx="4.5" ry="6.5" fill="#3C3C3C"/>
-        <path d="M45.5 65 L54.5 65 L50 71 Z" fill="#E8748A"/>
-        <line x1="12" y1="61" x2="30" y2="59" stroke="#D9985A" stroke-width="2" stroke-linecap="round"/>
-        <line x1="12" y1="70" x2="30" y2="70" stroke="#D9985A" stroke-width="2" stroke-linecap="round"/>
-        <line x1="88" y1="61" x2="70" y2="59" stroke="#D9985A" stroke-width="2" stroke-linecap="round"/>
-        <line x1="88" y1="70" x2="70" y2="70" stroke="#D9985A" stroke-width="2" stroke-linecap="round"/>
-      </svg>
+      <img src="kitty.svg" alt="Kelimeliste kedisi">
     </div>
     <div class="header-text">
       <h1>Kelimeliste'ye Hoşgeldin⭐</h1>
@@ -721,7 +683,7 @@ function render(){
 
   if(words.length === 0){
     list.innerHTML = `<div class="empty-state">
-      <div class="mascot"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 34 L29 8 L41 31 Z" fill="#F4A64A"/><path d="M80 34 L71 8 L59 31 Z" fill="#F4A64A"/><path d="M25 31 L30 16 L37 30 Z" fill="#FFD9AA"/><path d="M75 31 L70 16 L63 30 Z" fill="#FFD9AA"/><ellipse cx="50" cy="56" rx="35" ry="31" fill="#F7B96B"/><ellipse cx="50" cy="68" rx="23" ry="15" fill="#FFF6EA"/><ellipse class="cat-eye left" cx="37" cy="53" rx="4.5" ry="6.5" fill="#3C3C3C"/><ellipse class="cat-eye right" cx="63" cy="53" rx="4.5" ry="6.5" fill="#3C3C3C"/><path d="M45.5 65 L54.5 65 L50 71 Z" fill="#E8748A"/><line x1="12" y1="61" x2="30" y2="59" stroke="#D9985A" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="70" x2="30" y2="70" stroke="#D9985A" stroke-width="2" stroke-linecap="round"/><line x1="88" y1="61" x2="70" y2="59" stroke="#D9985A" stroke-width="2" stroke-linecap="round"/><line x1="88" y1="70" x2="70" y2="70" stroke="#D9985A" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="mascot"><img src="kitty.svg" alt="Kelimeliste kedisi"></div>
       <p>Henüz kelime yok. Yukarıdan ilk kelimeni ekle!</p>
     </div>`;
     return;
