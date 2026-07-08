@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelimeliste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --bg-soft:#F7F7FA;
+    --green:#58CC02;
+    --green-dark:#46A302;
+    --blue:#1CB0F6;
+    --blue-dark:#1899D6;
+    --yellow:#FFC800;
+    --yellow-dark:#E5B400;
+    --purple:#CE82FF;
+    --purple-dark:#A568CC;
+    --red:#FF4B4B;
+    --red-dark:#D63B3B;
+    --ink:#3C3C3C;
+    --ink-soft:#8A8A8A;
+    --border:#E5E5E5;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg-soft);
+    color:var(--ink);
+    font-family:'Nunito', system-ui, sans-serif;
+    min-height:100vh;
+    padding:24px 16px 64px;
+  }
+  .page{ max-width:640px; margin:0 auto; }
+
+  /* Header / mascot */
+  .header-card{
+    background:var(--bg);
+    border:2.5px solid var(--border);
+    border-radius:20px;
+    padding:18px 20px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:16px;
+  }
+  .owl{
+    font-size:42px;
+    flex-shrink:0;
+    filter:drop-shadow(0 3px 0 rgba(0,0,0,0.06));
+    animation:bob 3.2s ease-in-out infinite;
+  }
+  @keyframes bob{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-3px) rotate(-3deg); }
+  }
+  .header-text h1{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    font-size:22px;
+    margin:0 0 2px;
+    color:var(--ink);
+  }
+  .header-text p{
+    margin:0;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    font-weight:600;
+  }
+
+  /* Stats row */
+  .stats-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .stat-chip{
+    flex:1;
+    background:var(--bg);
+    border:2.5px solid var(--border);
+    border-radius:16px;
+    padding:10px 14px;
+    text-align:center;
+  }
+  .stat-chip .stat-icon{ font-size:18px; }
+  .stat-chip .stat-num{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    font-size:20px;
+    line-height:1.1;
+    margin-top:2px;
+  }
+  .stat-chip .stat-label{
+    font-size:10.5px;
+    font-weight:700;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+  }
+  .stat-chip.xp .stat-num{ color:var(--yellow-dark); }
+  .stat-chip.level .stat-num{ color:var(--purple); }
+
+  .progress-track{
+    background:var(--border);
+    height:14px;
+    border-radius:99px;
+    overflow:hidden;
+    margin:-8px 0 18px;
+  }
+  .progress-fill{
+    height:100%;
+    background:linear-gradient(90deg, var(--green), #7FE03A);
+    border-radius:99px;
+    transition:width 0.5s cubic-bezier(.22,1,.36,1);
+  }
+  .progress-caption{
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--yellow-dark);
+    text-align:center;
+    margin:-12px 0 18px;
+  }
+
+  /* Add card */
+  .add-card{
+    background:var(--bg);
+    border:2.5px solid var(--border);
+    border-radius:20px;
+    padding:16px;
+    margin-bottom:16px;
+  }
+  .add-card-label{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    color:var(--blue);
+    margin:0 0 10px;
+  }
+  .add-fields{
+    display:flex;
+    gap:8px;
+    margin-bottom:10px;
+    flex-wrap:wrap;
+  }
+  .add-fields input{
+    flex:1;
+    min-width:120px;
+    border:2.5px solid var(--border);
+    border-radius:14px;
+    padding:12px 14px;
+    font-size:15px;
+    font-family:'Nunito', sans-serif;
+    font-weight:700;
+    background:var(--bg-soft);
+    color:var(--ink);
+  }
+  .add-fields input::placeholder{ color:#B9B9C2; font-weight:600; }
+  .add-fields input.en-field:focus{
+    outline:none; border-color:var(--blue); background:#fff;
+  }
+  .add-fields input.tr-field:focus{
+    outline:none; border-color:var(--yellow-dark); background:#fff;
+  }
+  .note-field{
+    width:100%;
+    border:2.5px solid var(--border);
+    border-radius:14px;
+    padding:11px 14px;
+    font-size:13.5px;
+    font-family:'Nunito', sans-serif;
+    font-weight:600;
+    font-style:italic;
+    background:var(--bg-soft);
+    color:var(--ink);
+    margin-bottom:10px;
+  }
+  .note-field::placeholder{ color:#B9B9C2; font-weight:600; }
+  .note-field:focus{ outline:none; border-color:var(--purple); background:#fff; }
+
+  .btn3d{
+    border:none;
+    border-radius:14px;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:0.02em;
+    cursor:pointer;
+    color:#fff;
+    padding:12px 22px;
+    width:100%;
+    text-transform:uppercase;
+    transition:transform 0.05s ease, box-shadow 0.05s ease;
+  }
+  .btn3d.green{ background:var(--green); box-shadow:0 4px 0 var(--green-dark); }
+  .btn3d.green:hover{ filter:brightness(1.04); }
+  .btn3d.green:active{ transform:translateY(4px); box-shadow:0 0 0 var(--green-dark); }
+  .btn3d:disabled{ background:#D8D8DC; box-shadow:0 4px 0 #C2C2C7; cursor:not-allowed; }
+
+  /* Controls */
+  .controls{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .search-wrap{ position:relative; flex:1; min-width:150px; }
+  .search-wrap input{
+    width:100%;
+    border:2.5px solid var(--border);
+    border-radius:14px;
+    padding:9px 12px 9px 32px;
+    font-size:13.5px;
+    font-family:'Nunito', sans-serif;
+    font-weight:700;
+    background:var(--bg);
+    color:var(--ink);
+  }
+  .search-wrap input:focus{ outline:none; border-color:var(--blue); }
+  .search-wrap span{
+    position:absolute; left:11px; top:50%; transform:translateY(-50%);
+    font-size:14px;
+  }
+  select.sort-select{
+    border:2.5px solid var(--border);
+    border-radius:14px;
+    padding:9px 10px;
+    font-size:12.5px;
+    font-family:'Nunito', sans-serif;
+    font-weight:700;
+    background:var(--bg);
+    color:var(--ink-soft);
+  }
+
+  /* Word list */
+  .word-card{
+    background:var(--bg);
+    border:2.5px solid var(--border);
+    border-radius:16px;
+    padding:12px 14px;
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    transition:transform 0.12s ease;
+  }
+  .word-card:hover{ transform:translateY(-1px); border-color:#D6D6E0; }
+  .word-card.pop-in{ animation:popIn 0.35s cubic-bezier(.26,1.4,.4,1); }
+  @keyframes popIn{
+    0%{ transform:scale(0.85); opacity:0; }
+    60%{ transform:scale(1.03); opacity:1; }
+    100%{ transform:scale(1); }
+  }
+  .badge-dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--blue); flex-shrink:0;
+  }
+  .word-pair{
+    display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
+  }
+  .word-en{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700; font-size:15.5px;
+    color:var(--blue-dark);
+  }
+  .word-arrow{ color:#C9C9D4; font-size:13px; }
+  .word-tr{
+    font-weight:700; font-size:14.5px;
+    color:var(--ink);
+  }
+  .word-content{ flex:1; min-width:0; }
+  .word-note{
+    font-size:12.5px;
+    font-style:italic;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin-top:3px;
+    line-height:1.35;
+  }
+  .row-actions{ display:flex; gap:4px; flex-shrink:0; }
+  .icon-btn{
+    border:none; background:var(--bg-soft);
+    color:var(--ink-soft);
+    width:30px; height:30px; border-radius:10px;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:background 0.12s ease, color 0.12s ease, transform 0.08s ease;
+  }
+  .icon-btn:hover{ transform:translateY(-1px); }
+  .icon-btn.edit-btn:hover{ background:#E3F4FF; color:var(--blue-dark); }
+  .icon-btn.delete-btn:hover{ background:#FFE7E7; color:var(--red-dark); }
+  .icon-btn svg{ width:15px; height:15px; }
+
+  .word-card.editing{ border-color:var(--blue); background:#F4FBFF; }
+  .word-card.editing .word-content{ display:flex; flex-direction:column; gap:6px; }
+  .edit-input{
+    border:2px solid var(--border);
+    border-radius:10px;
+    padding:6px 9px;
+    font-size:14px;
+    font-family:'Nunito', sans-serif;
+    font-weight:700;
+    min-width:0; flex:1;
+    background:#fff;
+  }
+  .edit-input.en{ color:var(--blue-dark); border-color:var(--blue); }
+  .edit-input.tr{ color:var(--ink); border-color:var(--yellow-dark); }
+  .edit-input.note{
+    width:100%;
+    font-style:italic;
+    font-weight:600;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    border-color:var(--purple);
+  }
+  .edit-input:focus{ outline:none; }
+
+  .empty-state{
+    background:var(--bg);
+    border:2.5px dashed var(--border);
+    border-radius:18px;
+    padding:40px 20px;
+    text-align:center;
+    color:var(--ink-soft);
+  }
+  .empty-state .mascot{ font-size:34px; margin-bottom:8px; }
+  .empty-state p{ margin:0; font-size:14px; font-weight:700; }
+
+  .loading-state{
+    padding:40px; text-align:center; color:var(--ink-soft); font-weight:700; font-size:13px;
+  }
+
+  .toast{
+    position:fixed;
+    left:50%; bottom:24px;
+    transform:translate(-50%, 20px);
+    background:var(--ink);
+    color:#fff;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:13.5px;
+    padding:11px 20px;
+    border-radius:14px;
+    opacity:0;
+    pointer-events:none;
+    transition:transform 0.25s cubic-bezier(.22,1,.36,1), opacity 0.25s ease;
+    z-index:10;
+  }
+  .toast.show{ transform:translate(-50%, 0); opacity:1; }
+
+  @media (max-width:480px){
+    .word-tr::before{ content:"\2192  "; color:#C9C9D4; }
+    .word-arrow{ display:none; }
+  }
+
+  /* Auth screen */
+  #authScreen{
+    min-height:70vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .auth-card{
+    background:var(--bg);
+    border:2.5px solid var(--border);
+    border-radius:24px;
+    padding:36px 28px;
+    text-align:center;
+    max-width:360px;
+    width:100%;
+  }
+  .auth-card .owl{ font-size:52px; margin-bottom:8px; }
+  .auth-card h1{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    font-size:22px;
+    margin:0 0 6px;
+  }
+  .auth-card p{
+    color:var(--ink-soft);
+    font-weight:600;
+    font-size:13.5px;
+    margin:0 0 24px;
+  }
+  .google-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    width:100%;
+    background:var(--bg);
+    border:2.5px solid var(--border);
+    border-radius:16px;
+    padding:13px 18px;
+    font-family:'Nunito', sans-serif;
+    font-weight:800;
+    font-size:15px;
+    color:var(--ink);
+    cursor:pointer;
+    transition:background .15s, border-color .15s;
+  }
+  .google-btn:hover{ background:var(--bg-soft); border-color:#D0D0D0; }
+  .google-btn svg{ width:20px; height:20px; flex-shrink:0; }
+  .auth-error{
+    margin-top:14px;
+    color:var(--red-dark);
+    font-weight:700;
+    font-size:12.5px;
+  }
+  .auth-loading{
+    text-align:center;
+    color:var(--ink-soft);
+    font-weight:700;
+    padding:60px 0;
+  }
+
+  /* Header user row */
+  .user-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-left:auto;
+    flex-shrink:0;
+  }
+  .user-avatar{
+    width:32px; height:32px;
+    border-radius:50%;
+    border:2px solid var(--border);
+    object-fit:cover;
+  }
+  .logout-btn{
+    background:var(--bg-soft);
+    border:2px solid var(--border);
+    border-radius:12px;
+    padding:6px 10px;
+    font-family:'Nunito', sans-serif;
+    font-weight:700;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .logout-btn:hover{ background:var(--border); }
+  #appScreen{ display:none; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div id="authScreen">
+    <div class="auth-card">
+      <div class="owl">🦉</div>
+      <h1>Kelimeliste'ye Hoşgeldin</h1>
+      <p>Kelimelerini kaydetmek için Google ile giriş yap</p>
+      <button class="google-btn" id="googleLoginBtn">
+        <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.66-.22-2.45H12v4.63h6.47c-.28 1.5-1.13 2.77-2.4 3.62v3h3.87c2.27-2.09 3.58-5.17 3.58-8.8z"/><path fill="#34A853" d="M12 24c3.24 0 5.96-1.07 7.94-2.9l-3.87-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.27v3.1C3.24 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.24-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29v-3.1H1.27C.46 8.18 0 10.04 0 12s.46 3.82 1.27 5.39l4-3.1z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.24 2.7 1.27 6.61l4 3.1C6.22 6.86 8.87 4.75 12 4.75z"/></svg>
+        Google ile giriş yap
+      </button>
+      <div class="auth-error" id="authError"></div>
+    </div>
+  </div>
+
+  <div id="appScreen">
+
+  <div class="header-card">
+    <div class="owl">🦉</div>
+    <div class="header-text">
+      <h1>Kelimeliste'ye Hoşgeldin⭐</h1>
+      <p>Her yeni kelime bir adım daha ileri!</p>
+    </div>
+    <div class="user-row">
+      <img class="user-avatar" id="userAvatar" src="" alt="">
+      <button class="logout-btn" id="logoutBtn">Çıkış</button>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-chip xp">
+      <div class="stat-icon">⭐</div>
+      <div class="stat-num" id="totalCount">0</div>
+      <div class="stat-label">Kelime</div>
+    </div>
+    <div class="stat-chip level">
+      <div class="stat-icon">🏆</div>
+      <div class="stat-num" id="levelNum">1</div>
+      <div class="stat-label">Seviye</div>
+    </div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <div class="progress-caption" id="progressCaption">Sonraki seviyeye 10 kelime kaldı !</div>
+
+  <div class="add-card">
+    <p class="add-card-label">✏️ Yeni kelime ekle</p>
+    <div class="add-fields">
+      <input type="text" id="enInput" class="en-field" placeholder="İngilizce" autocomplete="off">
+      <input type="text" id="trInput" class="tr-field" placeholder="Türkçe" autocomplete="off">
+    </div>
+    <input type="text" id="noteInput" class="note-field" placeholder="Açıklama (opsiyonel) — örn. ne zaman kullanılır, ince anlam farkı..." autocomplete="off">
+    <button class="btn3d green" id="addBtn">Ekle</button>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <span>🔍</span>
+      <input type="text" id="searchInput" placeholder="Kelime ara...">
+    </div>
+    <select class="sort-select" id="sortSelect">
+      <option value="en-asc">A-Z (EN)</option>
+      <option value="tr-asc">A-Z (TR)</option>
+      <option value="newest">En yeni</option>
+      <option value="oldest">En eski</option>
+    </select>
+  </div>
+
+  <div id="list"></div>
+
+  </div><!-- /#appScreen -->
+</div>
+
+<div class="toast" id="toast">Harika! 🎉 Yeni kelime eklendi</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ---- Supabase ayarları ----
+// Bu iki değeri Supabase panelinde Project Settings > API'den al
+const SUPABASE_URL = 'https://meewwbsgfxxkcngtgncn.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_H4iresDaFNE3qi2eK1cnXQ_4EOgpZP_';
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentUser = null;
+let words = [];
+let editingId = null;
+let lastAddedId = null;
+
+const SEED_WORDS = [
+  ["Formal","Resmi",""],
+  ["Convenient","Uygun",""],
+  ["Attendees","Katılımcılar",""],
+  ["Referring","Atıfta bulunmak",""],
+  ["Appointment","Randevu",""],
+  ["Climate","İklim",""],
+  ["Constantly","Sürekli, Devamlı",""],
+  ["Complain","Şikayet etmek",""],
+  ["Looking Forward","Dört gözle beklemek",""],
+  ["Venture","Girişim",""],
+  ["Regret","Pişmanlık",""],
+  ["Delighted","Memnuniyet",""],
+  ["Stunned","Sersemlemek",""],
+  ["Content","Tatmin olmak",""],
+  ["Unphased","Etkilenmemiş","Bir olaydan etkilenmemek"],
+  ["Spirit Broken","Cesaretini kaybetmek",""],
+  ["Thrilled","Heyecanlı, Coşkulu","Exited gibi ama daha da heyecanlı, çok coşkulu anlamında"],
+  ["Hesitate","Tereddüt etmek",""],
+  ["In the meantime","Bu sırada","Bir şey olurken o sırada... gibi"],
+  ["Permanent","Kalıcı",""],
+  ["Treatment","Tedavi",""],
+  ["Quite","Oldukça",""],
+  ["Annually","Yıllık",""],
+  ["Occasionally","Ara sıra",""],
+  ["Consistent","Tutarlı",""],
+  ["Attend","Katılmak",""],
+  ["Approximately","Yaklaşık olarak",""],
+  ["Sidetracked","Yoldan çıkmak",""],
+  ["Wraps Up","Tamamlandı",""],
+  ["Agenda","Gündem",""],
+  ["It is high time","Şu anda tam zamanı",""],
+  ["Prophosal","Teklif",""],
+  ["Cottage","Kır evi",""],
+  ["Raise Salary","Maaşını arttırmak",""],
+  ["Inspire","İlham vermek",""],
+  ["Humble","Mütevazi",""],
+  ["Competence","Yetkinlik",""],
+  ["Commitment","Bağlılık",""],
+  ["Compatibility","Uyumluluk",""],
+  ["Demonstrate","Göstermek",""],
+  ["Utter","Tamamen",""],
+  ["Accomplish","Sonuçlandırmak",""],
+  ["Overstep","Sınırı aşmak",""],
+  ["Colleague","İş arkadaşı",""],
+  ["Arrogant","Kibirli",""],
+  ["Boundary","Limit",""],
+  ["Brokering","Aracılık",""]
+];
+
+const authScreen = document.getElementById('authScreen');
+const appScreen = document.getElementById('appScreen');
+const googleLoginBtn = document.getElementById('googleLoginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const userAvatar = document.getElementById('userAvatar');
+const authError = document.getElementById('authError');
+
+const list = document.getElementById('list');
+const enInput = document.getElementById('enInput');
+const trInput = document.getElementById('trInput');
+const noteInput = document.getElementById('noteInput');
+const addBtn = document.getElementById('addBtn');
+const searchInput = document.getElementById('searchInput');
+const sortSelect = document.getElementById('sortSelect');
+const totalCount = document.getElementById('totalCount');
+const levelNum = document.getElementById('levelNum');
+const progressFill = document.getElementById('progressFill');
+const progressCaption = document.getElementById('progressCaption');
+const toast = document.getElementById('toast');
+
+const MILESTONE = 10;
+
+function showToast(msg){
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => toast.classList.remove('show'), 1800);
+}
+
+// ---- Auth akışı ----
+
+googleLoginBtn.addEventListener('click', async () => {
+  authError.textContent = '';
+  const { error } = await supabaseClient.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.href }
+  });
+  if(error) authError.textContent = 'Giriş yapılamadı: ' + error.message;
+});
+
+logoutBtn.addEventListener('click', async () => {
+  await supabaseClient.auth.signOut();
+});
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  if(session && session.user){
+    currentUser = session.user;
+    showApp();
+  } else {
+    currentUser = null;
+    showAuth();
+  }
+});
+
+function showAuth(){
+  authScreen.style.display = 'flex';
+  appScreen.style.display = 'none';
+}
+
+async function showApp(){
+  authScreen.style.display = 'none';
+  appScreen.style.display = 'block';
+  userAvatar.src = currentUser.user_metadata?.avatar_url || '';
+  await loadWords();
+}
+
+// ---- Kelime verisi (Supabase) ----
+
+async function loadWords(){
+  list.innerHTML = '<div class="loading-state">Kelimeler yükleniyor...</div>';
+
+  const { data, error } = await supabaseClient
+    .from('words')
+    .select('*')
+    .order('created_at', { ascending: true });
+
+  if(error){
+    list.innerHTML = `<div class="empty-state"><p>Kelimeler yüklenemedi: ${escapeHtml(error.message)}</p></div>`;
+    return;
+  }
+
+  words = (data || []).map(w => ({ id: w.id, en: w.en, tr: w.tr, note: w.note || '', createdAt: w.created_at }));
+
+  // İlk girişte, hiç kelimesi yoksa örnek kelimeleri ekle
+  if(words.length === 0){
+    const seedRows = SEED_WORDS.map(([en, tr, note], idx) => ({
+      user_id: currentUser.id,
+      en, tr, note: note || '',
+      created_at: Date.now() + idx
+    }));
+    const { data: inserted, error: seedError } = await supabaseClient
+      .from('words')
+      .insert(seedRows)
+      .select();
+    if(!seedError && inserted){
+      words = inserted.map(w => ({ id: w.id, en: w.en, tr: w.tr, note: w.note || '', createdAt: w.created_at }));
+    }
+  }
+
+  render();
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+function updateStats(){
+  const total = words.length;
+  totalCount.textContent = total;
+  const level = Math.floor(total / MILESTONE) + 1;
+  levelNum.textContent = level;
+  const progressInLevel = total % MILESTONE;
+  const pct = (progressInLevel / MILESTONE) * 100;
+  progressFill.style.width = pct + '%';
+  const remaining = MILESTONE - progressInLevel;
+  progressCaption.textContent = total === 0
+    ? 'İlk kelimeni ekleyerek başla!'
+    : `Sonraki seviyeye ${remaining} kelime kaldı`;
+}
+
+function getVisibleWords(){
+  const q = searchInput.value.trim().toLocaleLowerCase('tr');
+  let l = words.filter(w => !q || w.en.toLocaleLowerCase('tr').includes(q) || w.tr.toLocaleLowerCase('tr').includes(q) || (w.note && w.note.toLocaleLowerCase('tr').includes(q)));
+  const mode = sortSelect.value;
+  l = l.slice().sort((a,b) => {
+    if(mode === 'en-asc') return a.en.localeCompare(b.en, 'tr');
+    if(mode === 'tr-asc') return a.tr.localeCompare(b.tr, 'tr');
+    if(mode === 'newest') return b.createdAt - a.createdAt;
+    if(mode === 'oldest') return a.createdAt - b.createdAt;
+    return 0;
+  });
+  return l;
+}
+
+function render(){
+  updateStats();
+  const visible = getVisibleWords();
+
+  if(words.length === 0){
+    list.innerHTML = `<div class="empty-state">
+      <div class="mascot">🦉</div>
+      <p>Henüz kelime yok. Yukarıdan ilk kelimeni ekle!</p>
+    </div>`;
+    return;
+  }
+  if(visible.length === 0){
+    list.innerHTML = `<div class="empty-state">
+      <div class="mascot">🔎</div>
+      <p>"${escapeHtml(searchInput.value)}" ile eşleşen kelime yok.</p>
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = visible.map(w => {
+    const popClass = (w.id === lastAddedId) ? ' pop-in' : '';
+    if(editingId === w.id){
+      return `
+      <div class="word-card editing" data-id="${w.id}">
+        <span class="badge-dot"></span>
+        <div class="word-content">
+          <div class="word-pair">
+            <input class="edit-input en" id="editEn" value="${escapeHtml(w.en)}">
+            <input class="edit-input tr" id="editTr" value="${escapeHtml(w.tr)}">
+          </div>
+          <input class="edit-input note" id="editNote" placeholder="Açıklama (opsiyonel)" value="${escapeHtml(w.note || '')}">
+        </div>
+        <div class="row-actions">
+          <button class="icon-btn save-btn" title="Kaydet" data-id="${w.id}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+          <button class="icon-btn cancel-btn" title="Vazgeç">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>`;
+    }
+    const noteHtml = w.note ? `<div class="word-note">${escapeHtml(w.note)}</div>` : '';
+    return `
+    <div class="word-card${popClass}" data-id="${w.id}">
+      <span class="badge-dot"></span>
+      <div class="word-content">
+        <div class="word-pair">
+          <span class="word-en">${escapeHtml(w.en)}</span>
+          <span class="word-arrow">→</span>
+          <span class="word-tr">${escapeHtml(w.tr)}</span>
+        </div>
+        ${noteHtml}
+      </div>
+      <div class="row-actions">
+        <button class="icon-btn edit-btn" title="Düzenle" data-id="${w.id}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+        <!--<button class="icon-btn delete-btn" title="Sil" data-id="${w.id}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+        </button>-->
+      </div>
+    </div>`;
+  }).join('');
+
+  lastAddedId = null;
+  attachRowListeners();
+}
+
+function attachRowListeners(){
+  list.querySelectorAll('.edit-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      editingId = btn.dataset.id;
+      render();
+      const f = document.getElementById('editEn');
+      if(f){ f.focus(); f.select(); }
+    });
+  });
+  list.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.id;
+      const { error } = await supabaseClient.from('words').delete().eq('id', id);
+      if(error){ showToast('Silinemedi: ' + error.message); return; }
+      words = words.filter(w => w.id !== id);
+      render();
+    });
+  });
+  list.querySelectorAll('.cancel-btn').forEach(btn => {
+    btn.addEventListener('click', () => { editingId = null; render(); });
+  });
+  list.querySelectorAll('.save-btn').forEach(btn => {
+    btn.addEventListener('click', () => commitEdit(btn.dataset.id));
+  });
+  ['editEn','editTr','editNote'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el){
+      el.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter') commitEdit(editingId);
+        if(e.key === 'Escape'){ editingId = null; render(); }
+      });
+    }
+  });
+}
+
+async function commitEdit(id){
+  const enField = document.getElementById('editEn');
+  const trField = document.getElementById('editTr');
+  const noteField = document.getElementById('editNote');
+  if(!enField || !trField) return;
+  const en = enField.value.trim().replace(/\s+/g, ' ');
+  const tr = trField.value.trim().replace(/\s+/g, ' ');
+  const note = noteField ? noteField.value.trim().replace(/\s+/g, ' ') : '';
+  if(!en || !tr) return;
+
+  const { error } = await supabaseClient
+    .from('words')
+    .update({ en, tr, note })
+    .eq('id', id);
+
+  if(error){ showToast('Güncellenemedi: ' + error.message); return; }
+
+  const w = words.find(w => w.id === id);
+  if(w){ w.en = en; w.tr = tr; w.note = note; }
+  editingId = null;
+  render();
+}
+
+async function addWord(){
+  const en = enInput.value.trim().replace(/\s+/g, ' ');
+  const tr = trInput.value.trim().replace(/\s+/g, ' ');
+  const note = noteInput.value.trim().replace(/\s+/g, ' ');
+  if(!en || !tr) return;
+
+  const { data, error } = await supabaseClient
+    .from('words')
+    .insert({ user_id: currentUser.id, en, tr, note, created_at: Date.now() })
+    .select()
+    .single();
+
+  if(error){ showToast('Eklenemedi: ' + error.message); return; }
+
+  words.push({ id: data.id, en: data.en, tr: data.tr, note: data.note || '', createdAt: data.created_at });
+  lastAddedId = data.id;
+  enInput.value = '';
+  trInput.value = '';
+  noteInput.value = '';
+  enInput.focus();
+  render();
+  showToast('Harika! 🎉 Yeni kelime eklendi');
+}
+
+addBtn.addEventListener('click', addWord);
+[enInput, trInput, noteInput].forEach(input => {
+  input.addEventListener('keydown', (e) => { if(e.key === 'Enter') addWord(); });
+});
+searchInput.addEventListener('input', render);
+sortSelect.addEventListener('change', render);
+
+// Sayfa açılışında mevcut oturumu kontrol et
+(async () => {
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if(session && session.user){
+    currentUser = session.user;
+    showApp();
+  } else {
+    showAuth();
+  }
+})();
+</script>
+</body>
+</html>
