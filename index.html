@@ -47,6 +47,18 @@
     gap:16px;
     margin-bottom:16px;
   }
+  @media(max-width: 992px) {
+    .header-card {
+      flex-direction: column;
+    }
+    .header-card .header-text {
+      text-align: center;
+    }
+
+    .header-card .user-row {
+      margin-left: 0;
+    }
+  }
   .owl{
     font-size:42px;
     flex-shrink:0;
@@ -343,6 +355,10 @@
     padding:40px 20px;
     text-align:center;
     color:var(--ink-soft);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .empty-state .mascot{ font-size:34px; margin-bottom:8px; }
   .empty-state p{ margin:0; font-size:14px; font-weight:700; }
@@ -390,7 +406,12 @@
     max-width:360px;
     width:100%;
   }
-  .auth-card .owl{ font-size:52px; margin-bottom:8px; }
+  .auth-card .owl{
+    font-size:52px;
+    margin-bottom:8px;
+    display: flex;
+    justify-content: center;
+  }
   .auth-card h1{
     font-family:'Baloo 2', sans-serif;
     font-weight:800;
