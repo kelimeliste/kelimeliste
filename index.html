@@ -47,18 +47,6 @@
     gap:16px;
     margin-bottom:16px;
   }
-  @media(max-width: 992px) {
-    .header-card {
-      flex-direction: column;
-    }
-    .header-card .header-text {
-      text-align: center;
-    }
-
-    .header-card .user-row {
-      margin-left: 0;
-    }
-  }
   .owl{
     font-size:42px;
     flex-shrink:0;
@@ -355,12 +343,7 @@
     padding:40px 20px;
     text-align:center;
     color:var(--ink-soft);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
   }
-
   .empty-state .mascot{ font-size:34px; margin-bottom:8px; }
   .empty-state p{ margin:0; font-size:14px; font-weight:700; }
 
@@ -407,12 +390,7 @@
     max-width:360px;
     width:100%;
   }
-  .auth-card .owl{ 
-    font-size:52px; 
-    margin-bottom:8px; 
-    display: flex;
-    justify-content: center;
-  }
+  .auth-card .owl{ font-size:52px; margin-bottom:8px; }
   .auth-card h1{
     font-family:'Baloo 2', sans-serif;
     font-weight:800;
@@ -456,6 +434,27 @@
     font-weight:700;
     padding:60px 0;
   }
+  .inapp-warning{
+    background:#FFF7E6;
+    border:2px solid #F4CE7A;
+    border-radius:16px;
+    padding:14px 16px;
+    margin-bottom:18px;
+    text-align:left;
+  }
+  .inapp-warning p{
+    margin:0 0 8px;
+    font-size:12.5px;
+    line-height:1.5;
+    color:var(--ink);
+    font-weight:600;
+  }
+  .inapp-warning p:last-of-type{ margin-bottom:12px; }
+  .inapp-warning .google-btn{
+    background:#FFF;
+    font-size:13px;
+    padding:10px 14px;
+  }
 
   /* Header user row */
   .user-row{
@@ -496,6 +495,14 @@
       </div>
       <h1>Kelimeliste'ye Hoşgeldin</h1>
       <p>Kelimelerini kaydetmek için Google ile giriş yap</p>
+
+      <div class="inapp-warning" id="inappWarning" style="display:none;">
+        <p><strong>⚠️ Google girişi bu ekranda çalışmayabilir.</strong></p>
+        <p>Bu sayfayı LinkedIn, Instagram ya da Facebook gibi bir uygulamanın içinden açmış olabilirsin. Google, güvenlik nedeniyle bu tür uygulama-içi tarayıcılardan girişe izin vermiyor.</p>
+        <p><strong>Çözüm:</strong> Sağ üstteki ⋮ veya ⋯ menüsünden <strong>"Tarayıcıda aç"</strong> seçeneğini kullan, ya da aşağıdaki butonla linki kopyalayıp Chrome/Safari gibi bir tarayıcıya yapıştır.</p>
+        <button class="google-btn" id="copyLinkBtn" type="button">🔗 Linki kopyala</button>
+      </div>
+
       <button class="google-btn" id="googleLoginBtn">
         <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.66-.22-2.45H12v4.63h6.47c-.28 1.5-1.13 2.77-2.4 3.62v3h3.87c2.27-2.09 3.58-5.17 3.58-8.8z"/><path fill="#34A853" d="M12 24c3.24 0 5.96-1.07 7.94-2.9l-3.87-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.27v3.1C3.24 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.24-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29v-3.1H1.27C.46 8.18 0 10.04 0 12s.46 3.82 1.27 5.39l4-3.1z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.24 2.7 1.27 6.61l4 3.1C6.22 6.86 8.87 4.75 12 4.75z"/></svg>
         Google ile giriş yap
@@ -503,6 +510,7 @@
       <div class="auth-error" id="authError"></div>
     </div>
   </div>
+
 
   <div id="appScreen">
 
@@ -609,6 +617,31 @@ function showToast(msg){
 }
 
 // ---- Auth akışı ----
+
+const inappWarning = document.getElementById('inappWarning');
+const copyLinkBtn = document.getElementById('copyLinkBtn');
+
+function isInAppBrowser(){
+  const ua = navigator.userAgent || '';
+  // LinkedIn, Instagram, Facebook, Messenger, Threads, TikTok, Snapchat, WeChat, Line vb. uygulama içi tarayıcı imzaları
+  return /LinkedInApp|Instagram|FBAN|FBAV|FB_IAB|Messenger|Threads|TikTok|Snapchat|MicroMessenger|Line\//i.test(ua);
+}
+
+if(isInAppBrowser()){
+  inappWarning.style.display = 'block';
+  googleLoginBtn.style.display = 'none';
+}
+
+copyLinkBtn?.addEventListener('click', async () => {
+  try{
+    await navigator.clipboard.writeText(window.location.href);
+    copyLinkBtn.textContent = '✅ Kopyalandı!';
+  }catch(e){
+    // Clipboard API bazı in-app tarayıcılarda kısıtlı olabilir, elle seçim için bir prompt göster
+    window.prompt('Bu linki kopyala ve bir tarayıcıya yapıştır:', window.location.href);
+  }
+  setTimeout(() => { copyLinkBtn.textContent = '🔗 Linki kopyala'; }, 2000);
+});
 
 googleLoginBtn.addEventListener('click', async () => {
   authError.textContent = '';
